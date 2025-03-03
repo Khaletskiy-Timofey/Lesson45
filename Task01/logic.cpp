@@ -1,29 +1,55 @@
-bool is_local_min(int* array, int size)
+#include "logic.h"
+
+int count_local_min(int* array, int size)
 {
+	int local_min = 0;
+
+	if (size > 1 && array[0] < array[1])
+	{
+		local_min++;
+	}
+	if (size > 1 && array[size - 1] < array[size - 2])
+	{
+		local_min++;
+	}
+
 	for (int i = 0; i < size; i++)
 	{
-		if (i == 0 && array[0] < array[1] 
-			|| i + 1 == size && array[i] < array[i - 1] 
-			|| array[i] < array[i - 1] && array[i] < array[i + 1])
+		if (array[i] < array[i - 1] && array[i] < array[i + 1])
 		{
-			return true;
+			local_min++;
 		}
 	}
 
-	return false;
+	return local_min;
 }
 
-bool is_local_max(int* array, int size)
+int* find_local_min_indices(int* array, int size, int* count)
 {
-	for (int i = 0; i < size; i++)
+	*count = count_local_min(array, size);
+
+	int* indices = new int[*count];
+	int j = 0;
+
+	if (size > 1 && array[0] < array[1])
 	{
-		if (i == 0 && array[0] > array[1]
-			|| i + 1 == size && array[i] > array[i - 1]
-			|| array[i] > array[i - 1] && array[i] > array[i + 1])
+		*indices = 0;
+		j++;
+	}
+
+	for (int i = 1; i < size; i++)
+	{
+		if (array[i] < array[i - 1] && array[i] < array[i + 1])
 		{
-			return true;
+			*(indices + j) = i;
+			j++;
 		}
 	}
 
-	return false;
+	if (size > 1 && array[size - 1] < array[size - 2])
+	{
+		*(indices + j) = size - 1;
+	}
+
+	return indices;
 }

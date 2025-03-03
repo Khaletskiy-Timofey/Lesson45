@@ -1,2 +1,2 @@
-bool is_local_min(int*, int);
-bool is_local_max(int*, int);
+int count_local_min(int*, int);
+int* find_local_min_indices(int*, int, int*);

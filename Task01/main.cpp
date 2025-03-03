@@ -7,7 +7,7 @@ int main()
 	int* array;
 	int size;
 
-	cout << "Enter size of array: " << endl;
+	cout << "Enter size of array: ";
 	cin >> size;
 
 	array = new int[size];
@@ -16,9 +16,13 @@ int main()
 
 	cout << "Array: " << array_to_string(array, size) << endl;
 
-	cout << "Array " << (is_local_min(array, size) ? "has" : "hasn't") << " local min" << endl;
-	cout << "Array " << (is_local_max(array, size) ? "has" : "hasn't") << " local max" << endl;
+	int count;
+	int* indices = find_local_min_indices(array, size, &count);
 
+	cout << "Count of local min's: " << count << endl;
+	cout << "Local min's: " << array_to_string(indices, count) << endl;
+
+	delete[] indices;
 	delete[] array;
 
 	return 0;
